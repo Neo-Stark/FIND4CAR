@@ -1,6 +1,6 @@
 # FIND4CAR
 
-> Proyecto de la asignatura Cloud Computing I, curso 2020-21, Master Ingeniería Informática, ETSIIT UGR
+> Proyecto de la asignatura Cloud Computing I, curso 2020-21, Máster Ingeniería Informática, ETSIIT UGR
 
 ## Motivación y problema a resolver
 
