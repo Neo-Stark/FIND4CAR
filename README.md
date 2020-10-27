@@ -36,7 +36,7 @@ en futuras HU (Historias de Usuario) se contemple la necesidad de usarlas se est
 - [Conductor.scala](app/models/Conductor.scala)
 - [Viaje.scala](app/models/Viaje.scala)
 
-## [Documentación adicional](http://neostark.wtf/FIND4CAR/"Enlace a documentación adicional")
+## [Documentación adicional](http://neostark.wtf/FIND4CAR "Enlace a documentación adicional")
 
 - [Correcta configuración de git y GitHub](/docs/configuracion-git-github.md)
 
