@@ -1,0 +1,4 @@
+---
+entidad:
+  - app/models/Conductor.scala
+  - app/models/Viaje.scala
