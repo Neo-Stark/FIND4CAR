@@ -8,5 +8,5 @@ La solución que yo propongo es crear un servicio que proporcione información s
 
 ## ÍNDICE
 
-- [Correcta configuración de git y GitHub](/docs/configuracion-git-github.md)
-- [Cronograma del proyecto](/docs/roadmap.md)
+- [Correcta configuración de git y GitHub](configuracion-git-github.md)
+- [Cronograma del proyecto](roadmap.md)
