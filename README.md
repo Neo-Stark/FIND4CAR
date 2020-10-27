@@ -31,9 +31,10 @@ en futuras HU (Historias de Usuario) se contemple la necesidad de usarlas se est
 
 ## [Roadmap](docs/roadmap.md)
 
-## Clases definidas hasta hito 1
+## Clases definidas hasta ahora
 
-
+- [Conductor.scala](app/models/Conductor.scala)
+- [Viaje.scala](app/models/Viaje.scala)
 
 ## [Documentación adicional](http://neostark.wtf/FIND4CAR/"Enlace a documentación adicional")
 
