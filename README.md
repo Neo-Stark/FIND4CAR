@@ -33,7 +33,7 @@ en futuras HU (Historias de Usuario) se contemple la necesidad de usarlas se est
 
 ## Clases definidas hasta hito 1
 
-- [Module.scala](app/Module.scala)
+
 
 ## [Documentación adicional](http://neostark.wtf/FIND4CAR/"Enlace a documentación adicional")
 
