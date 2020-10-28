@@ -14,7 +14,7 @@ que nuestro servicio debe conectarse y obtener información de diferentes sitios
 viable una arquitectura secuencial que deje al servidor esperando una respuesta de otro servicio mientras tenemos otras
 muchas tareas que no dependen de ella y que se podrían ejecutar en paralelo. Sin entrar en detalles de implementación,
 en las Arquitecturas dirigidas por eventos tenemos diferentes protocolos para montar nuestro backend, en este caso vamos
-a usar _WebSockets_ principalmente porque es una solución que no genera apenas overhead y se integra estupendamente bien
+a usar _WebSockets_ principalmente porque necesitamos manterner una conexión permanente con el usuario y se integra estupendamente bien
 con el framework que hemos elegido para el desarrollo.
 
 ## Herramientas a utilizar
