@@ -1,13 +1,11 @@
 package models
 
-import java.net.URL
-
 case class Conductor(
                     nombre: String,
                     valoracion: Int,
-                    foto: URL,
+                    foto: String,
                     coche: String, // TODO: Pensar en crear una clase coche
-                    enlace_perfil: URL,
+                    enlace_perfil: String, // Es un enlace genérico, la plataforma a la que apunte será indiferente y se definirá en la ejecución
                     ) {
 
 }
