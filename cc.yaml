@@ -2,3 +2,8 @@
 entidad:
   - app/models/Conductor.scala
   - app/models/Viaje.scala
+  - app/models/Busqueda.scala
+  - app/controllers/ControladorBusqueda.scala
+lenguaje: scala
+test: test/UnitSpec.scala
+fichero_tareas: build.sbt
