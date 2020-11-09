@@ -18,5 +18,8 @@ class UnitSpec extends PlaySpec {
       viajes.map(viaje => assert(viaje.fecha.isAfter(busqueda.busqueda.fecha)))
     }
 
+    "devolver una lista de viajes con origen y destino correctos" in {
+      viajes.map(viaje => viaje.trayecto.inicio must not be viaje.trayecto.fin)
+    }
   }
 }
