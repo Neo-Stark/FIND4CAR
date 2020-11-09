@@ -1,22 +1,23 @@
 package models
 
-case class Trayecto(inicio: String, fin: String)
+import java.time.LocalDateTime
 
-case class Fecha(dia: Int, hora: Int)
+case class Trayecto(inicio: String, fin: String)
 
 case class Viaje(
                   trayecto: Trayecto,
                   precio: Double,
-                  fecha: Fecha,
+                  fecha: LocalDateTime,
                   plazas: Int,
-                  conductor: Conductor,
-                  informacion_adicional: List[String],
-                )
+                  conductor: Option[Conductor],
+                  informacion: Option[String]
+                ) {
+}
 
+object Viaje {
+  def apply(trayecto: Trayecto, precio: Double, fecha: LocalDateTime, plazas: Int, conductor: Option[Conductor]): Viaje
+  = Viaje(trayecto, precio, fecha, plazas, conductor, None)
 
-// Aplicación de prueba
-object main extends App {
-  val data: List[Viaje] = List(Viaje(Trayecto("algeciras", "granada"), 20, Fecha(1, 23), 1, null, null))
-  data foreach (d => if (d.precio < 25) println("es barato"))
-
+  def apply(trayecto: Trayecto, precio: Double, fecha: LocalDateTime, plazas: Int): Viaje =
+    Viaje(trayecto, precio, fecha, plazas, None, None)
 }
