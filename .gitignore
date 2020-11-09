@@ -20,7 +20,6 @@ server.pid
 
 # Directorio app/
 /app/filters
-/app/controllers
 /app/services
 /app/views
 /app/Module.scala
