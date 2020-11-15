@@ -1,3 +1,6 @@
+layout: page
+title: "Documentación FIND4CAR"
+permalink: /
 # DOCUMENTACIÓN FIND4CAR
 
 # Introducción
