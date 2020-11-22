@@ -1,4 +1,4 @@
-FROM hseeberger/scala-sbt:11.0.8_1.4.3_2.13.3
+FROM openjdk:8
 WORKDIR /app
 EXPOSE 8080
 VOLUME /app/test
