@@ -23,4 +23,4 @@ código abierto. Como se ha dicho, se utilizará la API de loggin que incorpora 
 utiliza [Logback](http://logback.qos.ch/) como núcleo. En principio no será necesario el uso de BBDD, en el caso de que 
 en futuras HU (Historias de Usuario) se contemple la necesidad de usarlas se estudiará que herramienta utilizar.
 
-## [Roadmap](docs/roadmap.md)
+## [Roadmap](/docs/roadmap.md)
