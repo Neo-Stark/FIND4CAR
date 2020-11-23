@@ -70,7 +70,7 @@ az acr task create \
 --registry cc2021 \
 --name build_on_commit \
 --image find4car \
---context https://github.com/neo-stark/FIND4CAR \
+--context https://github.com/neo-stark/FIND4CAR.git#main \
 --file Dockerfile \
 --git-access-token <token-GitHub>
 ```
