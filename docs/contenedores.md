@@ -19,14 +19,12 @@ El Dockerfile finalmente resultante es el siguiente:
 FROM alpine
 WORKDIR /app
 EXPOSE 8080
-VOLUME /app/test
-ARG SBT_VERSION=1.3.13
+ARG SBT_VERSION=1.4.3
 ENV SBT_HOME=/usr/local/sbt
+VOLUME /app/test /app/app
 
-COPY app app
 COPY conf conf
-COPY project/build.properties project/build.properties
-COPY project/plugins.sbt project/plugins.sbt
+COPY project/build.properties project/plugins.sbt project/
 COPY build.sbt .
 RUN apk add --no-cache openjdk8 curl bash && mkdir $SBT_HOME && \
     curl -sL https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz | \
@@ -36,10 +34,11 @@ CMD ["sbt", "test"]
 ```
 
 Comentando un poco lo que se hace, en primer lugar elegimos la imagen base (*alpine*), luego decimos el directorio donde
-vamos a trabajar (/app) y declaramos un punto de montaje para el directorio de tests. También he aprovechado ya para indicar
-que el puerto 8080 es el que vamos a utilizar para conectarnos a nuestro servicio, aunque ahora mismo no nos hace falta, pero
-ya está para un futuro. Luego, declaro la versión de sbt y el sitio donde lo vamos a instalar. Hecho esto, copio los ficheros
-necesarios de la aplicación y descargo las herramientas necesarias para instalar y ejecutar el programa. Hay una cosa curiosa
+vamos a trabajar (/app). También he aprovechado ya para indicar que el puerto 8080 es el que vamos a utilizar para conectarnos a nuestro servicio, aunque ahora mismo no nos hace falta, pero
+ya está para un futuro. Luego, declaro la versión de sbt y el sitio donde lo vamos a instalar. Además, declaro los dos puntos de montaje que vamos a tener 
+ en la imagen, en este caso, para los fuentes y los tests (es bien sabido que esta etiqueta no es "necesaria" para montar los volúmenes, pero como indica
+ la [página de buenas prácticas](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#volume) de Docker para escribir Dockerfiles, es muy recomendable indicar estas partes de nuestra imagen).
+ Hecho esto, copio los ficheros de configuración necesarios de la aplicación y descargo las herramientas necesarias para instalar y ejecutar el programa. Hay una cosa curiosa
 con la última orden y es que el fichero que nos descargamos de sbt es solo un script que nos sirve para "ejecutarlo", pero
 realmente no es la herramienta en si, por lo que con la última orden le obligo a ejecutarse y a instalar todos los binarios
 necesarios. Si no hicieramos esto, cuando ejecutemos el contenedor tardaría mucho en iniciarse. Por otro lado, la imagen 
