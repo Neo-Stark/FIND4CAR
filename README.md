@@ -6,6 +6,14 @@ Este proyecto se trata de una idea personal que me surge constantemente cuando v
 
 La solución que yo propongo es crear un servicio que proporcione información sobre viajes compartidos ofertados en las diferentes plataformas (Blablacar, Amovens, etc) en un mismo lugar. Pudiendo comparar precios, opiniones de los conductores, horarios... Además de poder crear alertas para que cuando se publique un nuevo viaje (sea la plataforma que sea) el usuario pueda ser notificado. Las funcionalidades completas se irán detallando próximamente.
 
+## TEST
+
+Para lanzar los tests de la aplicación clonamos el repositorio y ejecutamos la siguiente orden:
+
+```bash
+docker run -v "$(pwd)"/test:/app/test -v "$(pwd)"/app:/app/app neostark/find4car
+```
+
 ## [Documentación](http://neostark.wtf/FIND4CAR "Enlace a documentación adicional")
 
 - [Correcta configuración de git y GitHub](/docs/configuracion-git-github.md)
