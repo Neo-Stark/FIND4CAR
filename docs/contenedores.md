@@ -17,33 +17,45 @@ El Dockerfile finalmente resultante es el siguiente:
 
 ```dockerfile
 FROM alpine
-WORKDIR /app
 EXPOSE 8080
 ARG SBT_VERSION=1.4.3
 ENV SBT_HOME=/usr/local/sbt
 VOLUME /app/test /app/app
 
+WORKDIR /app
 COPY conf conf
 COPY project/build.properties project/plugins.sbt project/
 COPY build.sbt .
 RUN apk add --no-cache openjdk8 curl bash && mkdir $SBT_HOME && \
     curl -sL https://github.com/sbt/sbt/releases/download/v$SBT_VERSION/sbt-$SBT_VERSION.tgz | \
     tar -xz --strip-components=1 -C $SBT_HOME && ln -s $SBT_HOME/bin/sbt /usr/bin/ && \
-    sbt sbtVersion
+    apk del curl && \
+    addgroup -S testgroup && adduser -S testuser -G testgroup -s /bin/ash && \
+    chown -R testuser .
+
+USER testuser
+RUN sbt sbtVersion
 CMD ["sbt", "test"]
 ```
 
-Comentando un poco lo que se hace, en primer lugar elegimos la imagen base (*alpine*), luego decimos el directorio donde
-vamos a trabajar (/app). También he aprovechado ya para indicar que el puerto 8080 es el que vamos a utilizar para conectarnos a nuestro servicio, aunque ahora mismo no nos hace falta, pero
+Comentando un poco lo que se hace, en primer lugar elegimos la imagen base (*alpine*). También he aprovechado ya para indicar
+que el puerto 8080 es el que vamos a utilizar para conectarnos a nuestro servicio, aunque ahora mismo no nos hace falta, pero
 ya está para un futuro. Luego, declaro la versión de sbt y el sitio donde lo vamos a instalar. Además, declaro los dos puntos de montaje que vamos a tener 
- en la imagen, en este caso, para los fuentes y los tests (es bien sabido que esta etiqueta no es "necesaria" para montar los volúmenes, pero como indica
- la [página de buenas prácticas](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#volume) de Docker para escribir Dockerfiles, es muy recomendable indicar estas partes de nuestra imagen).
- Hecho esto, copio los ficheros de configuración necesarios de la aplicación y descargo las herramientas necesarias para instalar y ejecutar el programa. Hay una cosa curiosa
+en la imagen, en este caso, para los fuentes y los tests (es bien sabido que esta etiqueta no es "necesaria" para montar los volúmenes, pero como indica
+la [página de buenas prácticas](https://docs.docker.com/develop/develop-images/dockerfile_best-practices/#volume) de Docker para escribir Dockerfiles, es muy recomendable indicar estas partes de nuestra imagen).
+Hecho esto, copio los ficheros de configuración necesarios de la aplicación, se realizan 3 COPY en 3 líneas diferentes porque son
+ ficheros que van en directorios de destino diferentes, todos estos ficheros copiados son ficheros de configuración necesarios para
+ instalar dependencias, plugins y versiones (así como el build.sbt). A continuación, descargo las herramientas necesarias
+ para instalar y ejecutar el programa (curl, bash, sbt y openjdk), una vez instalado sbt borramos curl puesto que no lo vamos
+ a necesitar más. Bash lo necesitamos porque el script de sbt usa bash como interprete. Luego creamos un usuario sin privilegios
+  para que ejecute los tests y cambiamos los permisos de los ficheros del proyecto para que pueda acceder a ellos. Hay una cosa curiosa
 con la última orden y es que el fichero que nos descargamos de sbt es solo un script que nos sirve para "ejecutarlo", pero
 realmente no es la herramienta en si, por lo que con la última orden le obligo a ejecutarse y a instalar todos los binarios
 necesarios. Si no hicieramos esto, cuando ejecutemos el contenedor tardaría mucho en iniciarse. Por otro lado, la imagen 
 pesaría solo 100MB, pero no es rentable por el tiempo que tarda en arrancar. Ya por último declaramos la orden que queremos 
-que se ejecute cuando lancemos un contenedor, en este caso, lanzar los tests.
+que se ejecute cuando lancemos un contenedor, en este caso, lanzar los tests. Esta orden RUN se ejecuta al final en otra
+línea diferente porque sbt instala sus paquetes en el directorio home del usuario por lo que necesitabamos primero instalar
+los paquetes con privilegios y luego, crear y cambiar de usuario antes de ejecutar esta orden.
 
 ## Docker Hub
 
