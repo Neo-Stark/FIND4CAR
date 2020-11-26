@@ -8,8 +8,17 @@ imagen como base nuestro contenedor pesaba cerca de 1GB... Demasiado pesado, por
 probó a partir de una imagen que solo propocionaba el JDK (la imagen oficial que encontramos en docker hub) e instalando
 nosotros el resto (sbt y scala). Aquí mejoramos el tamaño llegando a unos 500MB (la mitad), pero sigue siendo bastante.
 Por último (siendo esta la elección final), lo que se ha hecho es partir directamente de la imagen base de *alpine* e 
-instalando a mano todo lo que necesitamos, de esta manera se ha conseguido reducir el tamaño de la imagen final a **240MB**, 
-que está bastante bien, teniendo en cuenta que el JDK, scala y sbt pesan bastante.
+instalando a mano todo lo que necesitamos, de esta manera se ha conseguido reducir el tamaño de la imagen final a **240MB**
+(tamaño comprimido mostrado en docker hub), que está bastante bien, teniendo en cuenta que el JDK, scala y sbt pesan bastante.
+
+Las diferencias de tamaño lo podemos ver listando las imágenes y sus tags con la orden `docker images`:
+![imágenes docker](img/imagenes-docker.png)
+
+Estas diferencias de tamaño son fácilmente explicables si revisamos el número de capas que tiene cada una, usando 
+`docker inspect` y jq para trabajar con el json que genera y contar el número de capas obtenemos los siguientes resultados:
+ 
+![número de capas imágenes](img/capas-imagenes.png)
+
 
 ## Dockerfile
 
