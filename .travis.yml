@@ -4,5 +4,5 @@ scala:
   - 2.13.4
   - 2.12.12
 
-before_script: sbt test:compile
+before_script: sbt ++$TRAVIS_SCALA_VERSION test:compile
 script: sbt ++$TRAVIS_SCALA_VERSION test

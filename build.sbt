@@ -5,7 +5,7 @@ lazy val `find4car` = (project in file("."))
     name := "FIND4CAR",
     maintainer := "fran98@correo.ugr.es",
     version := "1.0",
-    scalaVersion := "2.13.1",
+    scalaVersion := "2.12.2",
     libraryDependencies ++= Seq(guice,
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % "test"
     )
