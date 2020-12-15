@@ -1,0 +1,25 @@
+# Scala CircleCI 2.0 configuration file
+version: 2
+jobs:
+  test:
+    docker:
+      - image: neostark/find4car
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      # Descargamos y cacheamos las dependencias
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "build.sbt" }}
+            - dependencies-
+
+      - run: sbt test:compile
+
+      - save_cache:
+          paths:
+            - ~/.m2
+            - ~/.sbt
+          key: dependencies-{{ checksum "build.sbt" }}
+
+      - run: sbt test
