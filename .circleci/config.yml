@@ -1,7 +1,7 @@
 # Scala CircleCI 2.0 configuration file
 version: 2
 jobs:
-  test:
+  build:
     docker:
       - image: neostark/find4car
     working_directory: ~/repo
