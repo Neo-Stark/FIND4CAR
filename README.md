@@ -1,7 +1,7 @@
 # FIND4CAR
 
 [![Build Status](https://travis-ci.com/Neo-Stark/FIND4CAR.svg?branch=main)](https://travis-ci.com/Neo-Stark/FIND4CAR)
-
+[![Build Status](https://circleci.com/gh/Neo-Stark/FIND4CAR.svg?style=svg)](https://app.circleci.com/pipelines/github/Neo-Stark/FIND4CAR)
 
 ## Introducción. Motivación y problema a resolver
 
@@ -23,6 +23,7 @@ docker run -v "$(pwd)"/test:/app/test -v "$(pwd)"/app:/app/app neostark/find4car
 ```
 
 Se nos descargará el contenedor _neostark/find4car_ desde DockerHub con todo lo necesario para ejecutar los tests. 
+
 ## [Documentación](http://neostark.wtf/FIND4CAR "Enlace a documentación adicional")
 
 - [Planificación - Arquitectura y herramientas - Roadmap](/docs/planificacion.md)
