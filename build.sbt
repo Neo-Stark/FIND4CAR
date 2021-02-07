@@ -1,4 +1,3 @@
-
 lazy val `find4car` = (project in file("."))
   .enablePlugins(PlayScala)
   .settings(
@@ -11,3 +10,4 @@ lazy val `find4car` = (project in file("."))
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % "test"
     )
   )
+ThisBuild / useCoursier := false
