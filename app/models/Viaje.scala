@@ -2,12 +2,12 @@ package models
 
 import java.time.LocalDateTime
 
-case class Trayecto(origen: Option[String], destino: Option[String])
+case class Trayecto(origen: String, destino: String)
 
 object Trayecto {
   def apply(origen:String, destino:String): Trayecto = {
     require(origen.toLowerCase != destino.toLowerCase, "Origen y destino no pueden ser el mismo")
-    Trayecto(Option(origen), Option(destino))
+    new Trayecto(origen, destino)
   }
 }
 

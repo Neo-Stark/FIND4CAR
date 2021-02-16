@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter
 import play.api.libs.json.Reads.localDateTimeReads
 
 object JsonReaders {
-  val dateTimeFormat = "yyyy-MM-dd HH:mm"
+  val dateTimeFormat = "yyyy/MM/dd HH:mm"
 
   val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(dateTimeFormat)
   implicit val localDateTimeReader: Reads[LocalDateTime] = Reads[LocalDateTime](js =>

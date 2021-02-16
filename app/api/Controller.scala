@@ -35,9 +35,20 @@ class Controller @Inject()(val controllerComponents: ControllerComponents) exten
     }
   }
 
+  def buscar: Action[JsValue] = Action(parse.json) { request =>
+    val peticion = request.body.validate[Busqueda]
+    logger.info("buscar: " + peticion.getOrElse("Petición no válida"))
+    peticion.fold(
+      errores => BadRequest(Json.obj("error" -> JsError.toJson(errores))),
+      peticionOk => {
+        val viajes = busqueda(peticionOk).buscar
+        Ok(Json.toJson(viajes))
+      }
+    )
+  }
   def buscarFecha: Action[JsValue] = Action(parse.json) { request =>
     val peticion = request.body.validate[Busqueda]
-    logger.info("buscarFecha: " + peticion.get)
+    logger.info("buscarFecha: " + peticion.getOrElse("Petición no válida"))
     peticion.fold(
       errores => BadRequest(Json.obj("error" -> JsError.toJson(errores))),
       peticionOk => {
@@ -48,7 +59,7 @@ class Controller @Inject()(val controllerComponents: ControllerComponents) exten
   }
   def buscarPrecio: Action[JsValue] = Action(parse.json) { request =>
     val peticion = request.body.validate[Busqueda]
-    logger.info("buscarPrecio: " + peticion.get)
+    logger.info("buscarPrecio: " + peticion.getOrElse("Petición no válida"))
     peticion.fold(
       errores => BadRequest(Json.obj("error" -> JsError.toJson(errores))),
       peticionOk => {

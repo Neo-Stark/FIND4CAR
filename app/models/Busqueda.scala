@@ -2,13 +2,13 @@ package models
 
 import java.time._
 
-case class Busqueda(trayecto: Trayecto, precio: Double, fecha: LocalDateTime)
+case class Busqueda(trayecto: Trayecto, precio: Option[Double], fecha: Option[LocalDateTime])
 
 object Busqueda {
   def apply(trayecto: Trayecto, precio: Double, fecha: LocalDateTime): Busqueda = {
     require(fecha.isAfter(LocalDateTime.now()), "Fecha y hora no válidas. Deben ser posteriores a la fecha actual")
     require(precio > 0, "El precio no puede ser negativo")
-    new Busqueda(trayecto, precio, fecha)
+    new Busqueda(trayecto, Option(precio), Option(fecha))
   }
   def apply(trayecto: Trayecto, precio: Double): Busqueda =
     apply(trayecto, precio, LocalDateTime.now().plusMinutes(10))
