@@ -46,4 +46,15 @@ class Controller @Inject()(val controllerComponents: ControllerComponents) exten
       }
     )
   }
+  def buscarPrecio: Action[JsValue] = Action(parse.json) { request =>
+    val peticion = request.body.validate[Busqueda]
+    logger.info("buscarPrecio: " + peticion.get)
+    peticion.fold(
+      errores => BadRequest(Json.obj("error" -> JsError.toJson(errores))),
+      peticionOk => {
+        val viajes = busqueda(peticionOk).buscarPrecio
+        Ok(Json.toJson(viajes))
+      }
+    )
+  }
 }

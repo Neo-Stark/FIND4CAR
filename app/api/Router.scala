@@ -12,5 +12,6 @@ class Router @Inject()(controller: Controller) extends SimpleRouter{
     case GET(p"/viajes") => controller.getAll
     case GET(p"/viajes/$id") => controller.get(id.toLong)
     case GET(p"/viajes/buscarFecha") => controller.buscarFecha
+    case GET(p"/viajes/buscarPrecio") => controller.buscarPrecio
   }
 }
