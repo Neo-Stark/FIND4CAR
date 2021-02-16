@@ -1,21 +1,10 @@
 package controllers
 
 import java.time.LocalDateTime
-
-import models.{Busqueda, Trayecto, Viaje}
+import models.{Busqueda, Trayecto, Viaje, ViajeDao}
 
 case class ControladorBusqueda private(busqueda: Busqueda) {
-  var listaViajes: List[Viaje] = {
-    List(
-      Viaje(Trayecto("algeciras", "granada"), 20, LocalDateTime.now().plusHours(12), 1),
-      Viaje(Trayecto("algeciras", "granada"), 18, LocalDateTime.now().plusDays(1), 1),
-      Viaje(Trayecto("estepona", "granada"), 18, LocalDateTime.now().plusDays(1).plusHours(2), 3),
-      Viaje(Trayecto("estepona", "guadix"), 18, LocalDateTime.now().plusDays(1).plusHours(3), 2),
-    )
-  }
-  def realizarBusqueda:List[Viaje] = listaViajes
-}
+  var listaViajes: List[Viaje] = ViajeDao.listaViajes
 
-object ControladorBusqueda {
-  def apply(busqueda: Busqueda): ControladorBusqueda = new ControladorBusqueda(busqueda)
+  def buscarFecha:List[Viaje] = listaViajes.filter(v => v.fecha.isAfter(busqueda.fecha))
 }
