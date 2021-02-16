@@ -36,36 +36,42 @@ class Controller @Inject()(val controllerComponents: ControllerComponents) exten
   }
 
   def buscar: Action[JsValue] = Action(parse.json) { request =>
-    val peticion = request.body.validate[Busqueda]
-    logger.info("buscar: " + peticion.getOrElse("Petición no válida"))
-    peticion.fold(
-      errores => BadRequest(Json.obj("error" -> JsError.toJson(errores))),
-      peticionOk => {
-        val viajes = busqueda(peticionOk).buscar
-        Ok(Json.toJson(viajes))
-      }
-    )
-  }
+    request.body.validate[Busqueda]
+      .fold(
+        errores => {
+          logger.error("buscar: " + errores)
+          BadRequest(Json.obj("error" -> JsError.toJson(errores)))
+        },
+        peticionOk => {
+          logger.info("buscar: " + peticionOk)
+          Ok(Json.toJson(busqueda(peticionOk).buscar))
+        }
+      )  }
+
   def buscarFecha: Action[JsValue] = Action(parse.json) { request =>
-    val peticion = request.body.validate[Busqueda]
-    logger.info("buscarFecha: " + peticion.getOrElse("Petición no válida"))
-    peticion.fold(
-      errores => BadRequest(Json.obj("error" -> JsError.toJson(errores))),
-      peticionOk => {
-        val viajes = busqueda(peticionOk).buscarFecha
-        Ok(Json.toJson(viajes))
-      }
-    )
+    request.body.validate[Busqueda]
+      .fold(
+        errores => {
+          logger.error("buscarFecha: " + errores)
+          BadRequest(Json.obj("error" -> JsError.toJson(errores)))
+        },
+        peticionOk => {
+          logger.info("buscarFecha: " + peticionOk)
+          Ok(Json.toJson(busqueda(peticionOk).buscarFecha))
+        }
+      )
   }
+
   def buscarPrecio: Action[JsValue] = Action(parse.json) { request =>
-    val peticion = request.body.validate[Busqueda]
-    logger.info("buscarPrecio: " + peticion.getOrElse("Petición no válida"))
-    peticion.fold(
-      errores => BadRequest(Json.obj("error" -> JsError.toJson(errores))),
-      peticionOk => {
-        val viajes = busqueda(peticionOk).buscarPrecio
-        Ok(Json.toJson(viajes))
-      }
-    )
-  }
+    request.body.validate[Busqueda]
+      .fold(
+        errores => {
+          logger.error("buscarPrecio: " + errores)
+          BadRequest(Json.obj("error" -> JsError.toJson(errores)))
+        },
+        peticionOk => {
+          logger.info("buscarPrecio: " + peticionOk)
+          Ok(Json.toJson(busqueda(peticionOk).buscarPrecio))
+        }
+      )  }
 }
