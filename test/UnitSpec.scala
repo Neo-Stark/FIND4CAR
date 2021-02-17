@@ -7,25 +7,23 @@ import org.scalatestplus.play._
 class UnitSpec extends PlaySpec {
 
   val busqueda: ControladorBusqueda = ControladorBusqueda(
-    Busqueda(Localizacion(23.25, 12.5), Localizacion(38.12, 121.16), fecha = LocalDateTime.now().plusSeconds(1))
+    Busqueda(Trayecto("Algeciras", "Granada"), fecha = LocalDateTime.now().plusHours(1), precio = 18)
   )
-  val viajes: List[Viaje] = busqueda.realizarBusqueda
+  val viajes: List[Viaje] = ViajeDao.listaViajes
   "ControladorBusqueda" must {
     "devolver una lista de viajes con fecha válida" in {
-      viajes.map(viaje => assert(viaje.fecha.isAfter(LocalDateTime.now())))
+      busqueda.buscarFecha.map(viaje => assert(viaje.fecha.isAfter(LocalDateTime.now())))
     }
     "devolver una lista de viajes con fecha posterior a la dada" in {
-      viajes.map(viaje => assert(viaje.fecha.isAfter(busqueda.busqueda.fecha)))
+      busqueda.buscarFecha.map(viaje => assert(viaje.fecha.isAfter(busqueda.busqueda.fecha.get)))
     }
 
     "devolver una lista de viajes con origen y destino correctos" in {
-      viajes.map(viaje => viaje.trayecto.inicio must not be viaje.trayecto.fin)
+      busqueda.buscar.map(viaje => viaje.trayecto.origen must not be viaje.trayecto.destino)
     }
 
     "devolver viajes con un precio menor al dado" in {
-      val b2: ControladorBusqueda = ControladorBusqueda(
-        Busqueda(Localizacion(23.25, 12.5), Localizacion(38.12, 121.16), fecha = LocalDateTime.now().plusDays(1), precio = 20))
-      b2.realizarBusqueda.map(viaje => assert(viaje.precio <= b2.busqueda.precio))
+      busqueda.buscarPrecio.map(viaje => assert(viaje.precio <= busqueda.busqueda.precio.get))
     }
     "devolver viajes con un precio correcto" in {
       viajes.map(_.precio must be > 0.0)

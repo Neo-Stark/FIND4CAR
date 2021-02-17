@@ -5,7 +5,7 @@ import play.api.Logger
 import play.api.libs.json._
 import play.api.mvc._
 import JsonReaders._
-import controllers.ControladorBusqueda
+import controllers._
 
 import javax.inject.{Inject, Singleton}
 
@@ -13,7 +13,7 @@ import javax.inject.{Inject, Singleton}
 class Controller @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
   private val logger = Logger(getClass)
   private val listaViajes = ViajeDao.listaViajes
-  private val listaAlertas = AlertaDao.listaAlertas
+  private val controladorAlertas = ControladorAlertas()
   private val busqueda = ControladorBusqueda
 
   def index: Action[AnyContent] = Action {
@@ -79,13 +79,13 @@ class Controller @Inject()(val controllerComponents: ControllerComponents) exten
 
   def alertas: Action[AnyContent] = Action {
     logger.info("obtener todas las alertas")
-    if (listaAlertas.isEmpty) NoContent
-    else Ok(Json.toJson(listaAlertas))
+    if (controladorAlertas.listaAlertas.isEmpty) NoContent
+    else Ok(Json.toJson(controladorAlertas.listaAlertas))
   }
 
   def alertas(id: Long): Action[AnyContent] = Action {
     logger.info("busqueda de alerta por id: " + id + "[ID]")
-    listaAlertas.find(_.id.get == id) match {
+    controladorAlertas.listaAlertas.find(_.id.get == id) match {
       case Some(alerta) => Ok(Json.toJson(alerta))
       case None => NotFound
     }
@@ -100,12 +100,9 @@ class Controller @Inject()(val controllerComponents: ControllerComponents) exten
       },
       peticionOk => {
         logger.info("crearAlerta: " + peticionOk)
-        peticionOk.id match {
-          case Some(_) => listaAlertas += peticionOk
-          case None => listaAlertas += Alerta(peticionOk, listaAlertas.lastOption.
-            getOrElse(Alerta(0, peticionOk.trayecto)).id.get + 1)
-        }
-        Created(Json.obj("recurso" -> ("alertas/" + listaAlertas.last.id.get.toString)))
+        controladorAlertas.crearAlerta(peticionOk)
+        Created(Json.obj("recurso" -> ("alertas/" + controladorAlertas.listaAlertas.
+          last.id.get.toString)))
       }
     )
   }
@@ -119,31 +116,19 @@ class Controller @Inject()(val controllerComponents: ControllerComponents) exten
       },
       peticionOk => {
         logger.info("modificarAlerta: " + peticionOk)
-        val busqueda = listaAlertas.find(_.id.get == id)
-        busqueda match {
-          case Some(alerta) =>
-            listaAlertas -= alerta
-            peticionOk.id match {
-              case Some(_) => listaAlertas += peticionOk
-              case None => listaAlertas += Alerta(peticionOk, listaAlertas.lastOption.
-                getOrElse(Alerta(0, peticionOk.trayecto)).id.get + 1)
-            }
-            Ok(Json.obj("recurso-modificado" -> peticionOk,
-              "id" -> id))
-          case None => NotFound
-        }
+        if (controladorAlertas.modificarAlerta(id, peticionOk))
+          Ok(Json.obj("recurso-modificado" -> peticionOk,
+            "id" -> id))
+        else NotFound
       }
     )
   }
 
   def eliminarAlerta(id: Long): Action[AnyContent] = Action {
-    val busqueda = listaAlertas.find(_.id.get == id)
-    busqueda match {
-      case Some(alerta) =>
-        listaAlertas -= alerta
-        Ok(Json.obj("recurso-eliminado" -> id))
-      case None => NotFound
-    }
+    logger.info("eliminarAlerta: " + id)
+    if (controladorAlertas.eliminarAlerta(id))
+      Ok(Json.obj("recurso-eliminado" -> id))
+    else NotFound
   }
 
 }

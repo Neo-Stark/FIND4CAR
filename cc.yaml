@@ -3,7 +3,10 @@ entidad:
   - app/models/Conductor.scala
   - app/models/Viaje.scala
   - app/models/Busqueda.scala
+  - app/models/Alerta.scala
   - app/controllers/ControladorBusqueda.scala
+  - app/controllers/ControladorAlertas.scala
 lenguaje: scala
 test: test/UnitSpec.scala
 fichero_tareas: build.sbt
+make: sbt test
