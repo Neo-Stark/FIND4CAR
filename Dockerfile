@@ -4,7 +4,7 @@ ARG SBT_VERSION=1.4.3
 ENV SBT_HOME=/usr/local/sbt
 VOLUME /app/test /app/app
 
-WORKDIR /app
+WORKDIR /app/test
 COPY conf conf
 COPY project/build.properties project/plugins.sbt project/
 COPY build.sbt .
