@@ -4,7 +4,7 @@ import controllers._
 import models._
 import org.scalatestplus.play._
 
-class UnitSpec extends PlaySpec {
+class controladorBusquedas_unitTests extends PlaySpec {
 
   val busqueda: ControladorBusqueda = ControladorBusqueda(
     Busqueda(Trayecto("Algeciras", "Granada"), fecha = LocalDateTime.now().plusHours(1), precio = 18)

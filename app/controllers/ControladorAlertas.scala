@@ -8,6 +8,9 @@ case class ControladorAlertas() {
 
   val listaAlertas: ArrayBuffer[Alerta] = AlertaDao.listaAlertas
 
+  def getAlerta(id:Long): Option[Alerta] = {
+    listaAlertas.find(_.id.get == id)
+  }
   def crearAlerta(alerta: Alerta):Any = {
     alerta.id match {
       case Some(_) => listaAlertas += alerta
