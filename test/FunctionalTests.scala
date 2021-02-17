@@ -9,7 +9,7 @@ import api.JsonReaders._
 
 import java.time.LocalDateTime
 
-class FunctionalTests extends PlaySpec with GuiceOneAppPerSuite {
+class FunctionalTests extends PlaySpec with GuiceOneAppPerTest {
   "FIND4CAR application" must {
     "responder a peticiones" in {
       val request = FakeRequest(GET, "/").withHeaders(HOST -> "localhost:9000")
