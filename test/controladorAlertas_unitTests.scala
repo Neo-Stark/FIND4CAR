@@ -21,7 +21,7 @@ class controladorAlertas_unitTests extends PlaySpec {
       val sizeListaAntes = listaAlertas.size
       val nuevaAlerta = Alerta(2, trayecto=Trayecto("Sevilla", "Madrid"))
       controladorAlertas.crearAlerta(nuevaAlerta)
-      assert(listaAlertas.sizeCompare(sizeListaAntes) != 0)
+      assert(listaAlertas.size > sizeListaAntes)
     }
     "Modifica una alerta" in {
       val id = controladorAlertas.listaAlertas.last.id.get
