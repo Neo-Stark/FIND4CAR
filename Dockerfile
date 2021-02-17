@@ -15,6 +15,5 @@ RUN apk add --no-cache openjdk8 curl bash && mkdir $SBT_HOME && \
     addgroup -S testgroup && adduser -S testuser -G testgroup -s /bin/ash && \
     chown -R testuser .
 
-USER testuser
 RUN sbt sbtVersion
 CMD ["sbt", "test"]
