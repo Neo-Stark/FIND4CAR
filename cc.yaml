@@ -7,6 +7,9 @@ entidad:
   - app/controllers/ControladorBusqueda.scala
   - app/controllers/ControladorAlertas.scala
 lenguaje: scala
-test: test/UnitSpec.scala
+test:
+  - test/controladorAlertas_unitTests.scala
+  - test/controladorBusquedas_unitTests.scala
+  - test/FunctionalTests.scala
 fichero_tareas: build.sbt
 make: sbt test
