@@ -6,13 +6,15 @@ import java.time.LocalDateTime
 
 class controladorAlertas_unitTests extends PlaySpec {
 
+  AlertaDao.listaAlertas.clear()
+  AlertaDao.listaAlertas += Alerta(1, Trayecto("Algeciras", "Granada"), 18)
   val controladorAlertas: ControladorAlertas = ControladorAlertas()
   "ControladorAlertas" must {
     "Obtiene una alerta - id correcto" in {
         assert(controladorAlertas.getAlerta(1).orNull.id.get == 1)
     }
     "Obtiene una alerta - id incorrecto" in {
-        assert(controladorAlertas.getAlerta(2).isEmpty)
+        assert(controladorAlertas.getAlerta(99).isEmpty)
     }
     "Crea una alerta" in {
       val listaAlertas = controladorAlertas.listaAlertas
@@ -25,7 +27,8 @@ class controladorAlertas_unitTests extends PlaySpec {
       val id = controladorAlertas.listaAlertas.last.id.get
       val nuevaAlerta = Alerta(id, Trayecto("Sevilla", "Madrid"), precio = 18)
       controladorAlertas.modificarAlerta(id, nuevaAlerta)
-      assert(controladorAlertas.getAlerta(id).orNull.precio.getOrElse(0) == 18)
+      val alertaModificada = controladorAlertas.getAlerta(id).orNull
+      assert(alertaModificada.precio.getOrElse(0) == 18)
     }
     "Elimina una alerta" in {
       val id = controladorAlertas.listaAlertas.last.id.get
