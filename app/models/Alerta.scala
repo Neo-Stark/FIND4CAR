@@ -2,7 +2,7 @@ package models
 
 import java.time.LocalDateTime
 
-case class Alerta private(id: Option[Long], trayecto: Trayecto, precio: Option[Double], fecha: Option[LocalDateTime])
+case class Alerta (id: Option[Long], trayecto: Trayecto, precio: Option[Double], fecha: Option[LocalDateTime])
 
 object Alerta {
   def apply(id: Long, trayecto: Trayecto, precio: Double, fecha: LocalDateTime): Alerta = {

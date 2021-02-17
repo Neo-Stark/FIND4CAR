@@ -24,7 +24,7 @@ case class ControladorAlertas() {
     busqueda match {
       case Some(alerta) =>
         listaAlertas -= alerta
-        crearAlerta(nuevaAlerta)
+        crearAlerta(Alerta(nuevaAlerta, id))
         true
       case None => false
     }
