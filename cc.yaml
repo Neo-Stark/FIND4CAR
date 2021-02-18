@@ -12,4 +12,4 @@ test:
   - test/controladorBusquedas_unitTests.scala
   - test/FunctionalTests.scala
 fichero_tareas: build.sbt
-make: sbt test
+make: sbt
